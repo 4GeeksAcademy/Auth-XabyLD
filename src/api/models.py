@@ -17,3 +17,14 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+    def create_user(self, email, password , is_active = True):
+        new_user = User(
+            email = email,
+            password = password,
+            is_active = is_active
+            
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+        return new_user
