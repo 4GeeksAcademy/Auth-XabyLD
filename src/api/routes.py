@@ -15,7 +15,7 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 
-@api.route('/hello', methods=['POST', 'GET'])
+@api.route('/private', methods=['POST', 'GET'])
 @jwt_required()
 def handle_hello():
 
@@ -49,3 +49,4 @@ def post_register_user():
    except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+   

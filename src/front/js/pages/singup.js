@@ -41,8 +41,13 @@ const SingUp = () => {
             <input type="password" name="password" value={formData.password} onChange={changesInput}/>
             </div>
           </form>
+            
+           
+          <Link to="/login">
+            <button type="submit">Register</button>
 
-          <button onClick={handleSubmit} type="button">Register</button>
+        </Link>
+     
 
         </div>
 

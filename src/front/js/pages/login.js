@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 
 const Login = () => {
@@ -53,7 +54,10 @@ const Login = () => {
           />
         </div>
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        <button type="submit">Login</button>
+        <Link to="/private">
+            <button type="submit">Login</button>
+
+        </Link>
       </form>
     </div>
   );
