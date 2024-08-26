@@ -1,5 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 
+bcrypt = Bcrypt()
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -15,16 +17,23 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "is_active": self.is_active
+           
             # do not serialize the password, its a security breach
         }
+    
+    def generate_password(self, password):
+        return bcrypt.generate_password_hash(password)
+    
     def create_user(self, email, password , is_active = True):
+        hashed_password = self.generate_password(password).decode("utf-8")
         new_user = User(
             email = email,
-            password = password,
-            is_active = is_active
+            password = hashed_password,
+            is_active = is_active,
+           
             
         )
-
         db.session.add(new_user)
         db.session.commit()
         return new_user

@@ -1,11 +1,14 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+
+
 
 
 const SingUp = () => {
 
     const {store, actions} = useContext(Context) 
+    const navigate = useNavigate()
 
     const [formData , setFormData] = useState({
         email : "",
@@ -20,7 +23,14 @@ const SingUp = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        actions.registerUser(formData)
+        console.log("Test")
+        if (formData.email == "" || formData.password == ""){
+            console.log("Necesitas rellenar todos los campos")
+        } else {
+
+            actions.registerUser(formData)
+            navigate("/login")
+        }
     }
 
 
@@ -40,13 +50,12 @@ const SingUp = () => {
             <label>Introduzca su contraseña : </label>
             <input type="password" name="password" value={formData.password} onChange={changesInput}/>
             </div>
+            <button type="submit">Register</button>
           </form>
             
-           
-          <Link to="/login">
-            <button type="submit">Register</button>
+         
 
-        </Link>
+       
      
 
         </div>

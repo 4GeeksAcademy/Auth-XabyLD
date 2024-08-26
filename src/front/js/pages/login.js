@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+
 
 
 const Login = () => {
@@ -10,6 +11,8 @@ const Login = () => {
     email: "",
     password: ""
   })
+
+   const navigate = useNavigate(); 
 
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -24,10 +27,16 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        actions.loginUser(formData)
+        const response = await actions.loginUser(formData);
+
+        if ( response){
+          navigate("/private");
+
+        } else {
+          console.log("Login fallido");
+        }
         
       };
-  
 
   return (
     <div className="login-container">
@@ -54,10 +63,11 @@ const Login = () => {
           />
         </div>
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        <Link to="/private">
+       
             <button type="submit">Login</button>
+           
 
-        </Link>
+      
       </form>
     </div>
   );
